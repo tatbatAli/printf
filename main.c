@@ -1,10 +1,12 @@
 #include <stdio.h>
-#include <stdarg.h>
 #include "ft_printf.h"
 
 int main()
 {
-    int res = ft_printf("hello world %-10.5d" , 42);
-    printf("res : %d\n" , res);
+    // char *str = NULL;
+    int res = ft_printf("ft: %X\n", 156957);
+    ft_printf("res : %d\n" , res);
+    int out = printf("or: %X\n", 156957);
+    printf("out : %d\n" , out);
     return (0);
 }

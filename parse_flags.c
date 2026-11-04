@@ -6,17 +6,20 @@
 /*   By: atatbat <atatbat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 15:01:42 by atatbat           #+#    #+#             */
-/*   Updated: 2026/11/03 17:03:24 by atatbat          ###   ########.fr       */
+/*   Updated: 2026/11/04 10:52:10 by atatbat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "../circle0/libft.h"
-void parse_flags(char *format , int *i , t_flags *flags)
+
+void parse_flags(const char *format , int *i , t_flags *flags)
 {
     char *str;
     
+    if (!format)
+        return ;
     str = "-+0#";
+    initialize_flags(flags);
     while (format[*i] != '\0' && ft_strchr(str, format[*i]))
     {
         if (format[*i] == '-')
@@ -46,5 +49,9 @@ void parse_flags(char *format , int *i , t_flags *flags)
             (*i)++;
         }
     }
+    if (flags->minus_flag && flags->zero_flag)
+        flags->zero_flag = 0;
+    if (flags->plus_flag && flags->space_flag)
+        flags->space_flag = 0;
 
 }
