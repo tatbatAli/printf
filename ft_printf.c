@@ -6,25 +6,22 @@
 /*   By: atatbat <atatbat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 09:40:12 by atatbat           #+#    #+#             */
-/*   Updated: 2026/11/04 15:32:19 by atatbat          ###   ########.fr       */
+/*   Updated: 2026/11/06 14:58:16 by atatbat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 int ft_printf(const char *format, ...)
 {
     int i;
-    int n;
     int count;
-    char c;
-    char *str;
-    va_list arg;
+    va_list args;
     t_flags flags;
 
     if (!format)
         return (-1);
-    va_start(arg , format);
+    va_start(args , format);
     i = 0;
     count = 0;
     while (format[i] != '\0')
@@ -32,50 +29,29 @@ int ft_printf(const char *format, ...)
         if (format[i] == '%')
         {
             i++;
-            parse_flags(format , &i, &flags);
+            parse_flags(format , &i, &flags, count);
             if (format[i] == 's')
-            {
-                str = va_arg(arg, char *);
-                if (!str)
-                {
-                    ft_putstr_fd("(null)\n", 1);
-                    count += ft_strlen("(null)\n");
-                    return (count);
-                }
-                count += ft_strlen(str);
-                ft_putstr_fd(str, 1);
-            }
+                count = ft_string_handler(&args, count);
             else if (format[i] == 'd' || format[i] == 'i')
-            {
-                n = va_arg(arg, int);
-                ft_putnbr_fd(n , 1);
-                count += ft_int_len(n);
-            }else if (format[i] == 'c')
-            {
-                c = va_arg(arg, int);
-                ft_putchar_fd(c , 1);
-                count++;
-            }else if (format[i] == 'u')
-            {
-                n = va_arg(arg, unsigned int);
-                ft_put_unsignedint(n);
-                count += ft_unsignedint_len(n);
-            }else if (format[i] == 'x' || format[i] == 'X')
-            {
-                n = va_arg(arg, unsigned int);
-                ft_puthexa(n, format[i]);
-                count += ft_hexa_len(n);
-            }else if  (format[i] == 'p')
-            {
-                
-            }
+                count = ft_decimal_handler(&args, count);
+            else if (format[i] == 'c')
+                count = ft_char_handler(&args, count);
+            else if (format[i] == 'u')
+                count = ft_unsigned_handler(&args, count);
+            else if (format[i] == 'x' || format[i] == 'X')
+                count = ft_hexa_handler(format[i], &args, count);
+            else if  (format[i] == 'p')
+                count = ft_address_handler(&args, count);
+            else if (format[i] == '%')
+                count = ft_percentage_handler(count);
             i++;
-        }else{
+        }
+        else{
             ft_putchar_fd(format[i], 1);
             i++;
             count++;
         }
     }
-    va_end(arg);
+    va_end(args);
     return (count);
 }

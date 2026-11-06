@@ -17,7 +17,7 @@ int ft_int_len(int nb)
     int len;
 
     len = 0;
-    if (nb < 0)
+    if (nb <= 0)
         len++;
     while (nb != 0)
     {

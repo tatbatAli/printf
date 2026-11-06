@@ -6,13 +6,13 @@
 /*   By: atatbat <atatbat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:56:39 by atatbat           #+#    #+#             */
-/*   Updated: 2026/11/04 15:30:24 by atatbat          ###   ########.fr       */
+/*   Updated: 2026/11/05 12:13:00 by atatbat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void    ft_puthexa(unsigned int nb, char c)
+void    ft_puthexa(unsigned long nb, char c)
 {
     char *hexa_representation;
     char *HEXA_reperesntation;
